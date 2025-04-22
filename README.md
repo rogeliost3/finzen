@@ -1,9 +1,9 @@
 # finzen
 Proyecto individual de contabilidad personal y objetivos de ahorro
 
-Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + Sequelize + MySQL, API + Views, 4 o 5 tablas y manejo de usuarios y sesiones con encriptacion de password. En el futuro conexion a API del banco e importar los datos):
+Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + Sequelize + MySQL, API + Views, 4 o 5 tablas y manejo de usuarios y sesiones con encriptacion de password JWT. En el futuro conexion a API del banco e importar los datos):
 
-En principio se podria plantear que los datos de cada usuario se guarden en la misma base de datos, pero la aplicacion no tendria tiron comercial si la gente sabe que sus datos financieros van a estar guardados en un servidor ajeno y encima junto con los datos de mas usuarios. Con el riesgo actual de que sea robados, y tratandose de los datos financieros de cada uno, no sería viable. Por tanto he escogido que los datos personales se guarden en el movil o portatil donde se esté usando esta aplicacion, con posibilidad de portar la base de datos de un movil a un PC o a otro dispositivo donde queramos usarlo. Asi nuestros datos financieros estan bajo nuestra exclusiva responsabilidad.
+En principio se podria plantear que los datos de cada usuario se guarden en la misma base de datos, pero la aplicacion no tendria tiron comercial si la gente sabe que sus datos financieros van a estar guardados en un servidor ajeno y encima junto con los datos de mas usuarios. Con el riesgo actual de que sean robados, y tratandose de los datos financieros de cada uno, no sería viable. Por tanto he escogido que los datos personales se guarden en el movil o portatil donde se esté usando esta aplicacion, de forma encriptada, con posibilidad de portar la base de datos de un movil a un PC o a otro dispositivo donde queramos usarlo. Asi nuestros datos financieros estan bajo nuestra exclusiva responsabilidad.
 
 
 💸 FINZEN. Controlador de Finanzas Personales
@@ -20,7 +20,14 @@ Users
 - Goals (objetivos de ahorro o de gasto)
 
 Extra:
-- API para consultar estadísticas mensuales
+- API para consultar:
+  - CRUD de definiciones de consultas de movimientos, agrupados por categorias, sin agrupar o filtrados por categorias. 
+  - objetivos de ahorro mensual
+  - objetivos de ahorro anual
+  - avisos recibidos de objetivos alcanzados, o de gastos sobrepasados
+  - evolucion de saldos
+  - CRUD de categorias de movimientos
+
 - Dashboard con resumen financiero en las Views
 - Conexion a API de banco para obtener los datos de la cuenta personal
 

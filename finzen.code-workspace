@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Routend"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "finzen"
+	}
+}

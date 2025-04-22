@@ -1,0 +1,78 @@
+22 abril 2025 
+inicio el archivo history.txt en la carpeta /ignore para que git no lo suba al repo
+
+Le pido a chatgpt que me genere las definiciones Sequelize en formato ES Modules, con un archivo separado por modelo y las relaciones establecidas.
+    Hay que pedirle que genere en el modelo ES Modules para que use import/export y que no genere campos para control timestamp, 
+    o decirle qué campos nos interesa, y si solo createdAT o tambien updatedAt.
+
+configuro variables de entorno .env
+    - cambio nombres en DB_HOST, DB_NAME y APP_HOST
+    - establezco puerto sin usar para la base de datos DB_PORT: 3310
+
+configuro docker-compose.yml
+
+Genero los script de creacion de la Base de datos y poblamiento:
+    - chatgpt me crea los script de creacion de la base de datos que coloco en /database como 01-schema.sql
+        Indicarle que añada la codificacion UTF-8 al final de cada tabla, ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        Cuando me descargue el archivo que me genera, abrirlo y guardarlo con UTF-8 (CODE, abajo a la derecha icono UTF-8 - Save With Encoding)
+    - chatgpt me crea los script de poblamiento de la base de datos que coloco en /database como 02-dummydata.sql
+        Indicarle que incluya la linea SET NAMES 'utf8mb4'; en el comienzo del archivo
+        Cuando me descargue el archivo que me genera, abrirlo y guardarlo con UTF-8 (CODE, abajo a la derecha icono UTF-8 - Save With Encoding)
+
+
+Pruebo los scripts en una base de datos local para ver que no genera errores
+
+Crear el diagrama ER con Workbench 
+    Eliminar las relaciones que chatgpt haya creado que no me sirvan
+    Eliminar los campos que no me sirvan
+    generar de nuevo el script de 01-schema.sql y 02-dummydata.sql
+    pedirle a chatgpt que me cree el archivo con las nuevas relaciones, para sequelize en formato ES Modules
+    eliminar la base de datos y volverla a crear con los nuevos scripts 
+    Comprobar que la BD incorpora los nuevos cambios
+    Regenerar de nuevo el esquema ER y comprobar que está OK
+
+Creo las imagenes de docker y levanto los contenedores con docker compose up --build que procesa el docker-compose.yml
+
+creo la conexion en workbench a la base de datos de docker en el puerto 3310 con el usuario user y password 1234
+
+Compruebo que las bases de datos se han creado y se han poblado
+
+Añado a los script un usuario admin y quito del admin los que haya creado el chatgpt, si es que mi app es de un solo admin claro.
+
+{Solucionado arriba: veo que los acentos se graban como Ana PÃ©rez y no como Ana Pérez:
+    se guarda como utf8: En VSCODE, parte inferior derecha, pichar en UTF-8 y "save with encoding"
+    en la primera linea del SQL de poblamiento añadir SET NAMES 'utf8mb4';
+    añadir al SQL que crea el SCHEMA lo siguiente al final de cada create table: ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    hacer down  -v y up --build para reconstruir la base de datos y el contenedor
+}
+
+copio de otro proyecto 
+    - index.js , hago limpieza para el proyecto actual, quito cors. Solo necesito que funcione la ruta /test
+
+    - ./routes/router.js, hago limpieza para el proyecto actual
+
+http://localhost:3000/test me muestra el mensaje de conexion a la base de datos establecida.
+
+
+Ahora solo tengo que hacer algunos puntos de API para que devuelva datos:
+    logeo de un usuario en la API
+    listado de movimientos de un usuario:
+        /transac?start="10/2/2025"&end="31/12/2025"&cat="hipoteca"
+        /transac?start="10/2/2025"&end="31/12/2025" << si falta categoria devuelve todo 
+        /transac?start="10/2/2025"&end="31/12/2025"&groupby="month" / "cat"
+        /goals
+        /goals/add
+        /goals/edit
+        /goals/delete
+        /budgets
+        /budgets/add
+        /budgets/edit
+        /budgets/delete
+        /cats
+        solo admin:
+        /cats/add
+        /cats/edit
+        /cats/delete
+
+
+
