@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../Routend"
+		},
+		{
+			"path": "../../BACKEND/merk2"
 		}
 	],
 	"settings": {

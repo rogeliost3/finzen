@@ -1,53 +1,26 @@
 # finzen
 Proyecto individual de contabilidad personal y objetivos de ahorro
 
-Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + Sequelize + MySQL, API + Views, 4 o 5 tablas y manejo de usuarios y sesiones con encriptacion de password JWT. En el futuro conexion a API del banco e importar los datos):
-
-En principio se podria plantear que los datos de cada usuario se guarden en la misma base de datos, pero la aplicacion no tendria tiron comercial si la gente sabe que sus datos financieros van a estar guardados en un servidor ajeno y encima junto con los datos de mas usuarios. Con el riesgo actual de que sean robados, y tratandose de los datos financieros de cada uno, no sería viable. Por tanto he escogido que los datos personales se guarden en el movil o portatil donde se esté usando esta aplicacion, de forma encriptada, con posibilidad de portar la base de datos de un movil a un PC o a otro dispositivo donde queramos usarlo. Asi nuestros datos financieros estan bajo nuestra exclusiva responsabilidad.
+Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + Sequelize + MySQL, API, 4 o 5 tablas y manejo de usuarios y sesiones con encriptacion de password JWT. En el futuro conexion a API del banco e importar los datos :)
 
 
 💸 FINZEN. Controlador de Finanzas Personales
-Tema: Finanzas / Contabilidad Personal
 
 Descripción:
-Una aplicación web para ayudar a los usuarios a gestionar sus gastos, ingresos y presupuestos mensuales.
+Una aplicación web para ayudar a los usuarios a gestionar sus gastos, ingresos y presupuestos mensuales y objetivos de ahorro.
 
 Tablas:
-Users
+- Users
 - Transactions (gastos o ingresos, con categoría y fecha)
 - Categories (alimentación, transporte, ocio, etc.)
 - Budgets (presupuestos por categoría o mes)
 - Goals (objetivos de ahorro o de gasto)
-
-Extra:
-- API para consultar:
-  - CRUD de definiciones de consultas de movimientos, agrupados por categorias, sin agrupar o filtrados por categorias. 
-  - objetivos de ahorro mensual
-  - objetivos de ahorro anual
-  - avisos recibidos de objetivos alcanzados, o de gastos sobrepasados
-  - evolucion de saldos
-  - CRUD de categorias de movimientos
-
-- Dashboard con resumen financiero en las Views
-- Conexion a API de banco para obtener los datos de la cuenta personal
-
-Detalle del controlador para la app de finanzas personales. 
-
-🗂️ Estructura de tablas
-
-🔁 Relaciones entre ellas
-
-🧠 Funcionalidades clave del backend
-
-📦 Controladores (por tabla)
-
 
 Users
     id
     name
     email
     password (hasheada)
-    createdAt, updatedAt
 
 Transactions
     id
@@ -64,7 +37,6 @@ Categories
     name (e.g. "Alimentación", "Ocio", etc.)
     type (income | expense)
     userId (FK opcional si son personalizadas)
-    createdAt, updatedAt
 
 Budgets
     id
@@ -72,7 +44,7 @@ Budgets
     categoryId (FK)
     limitAmount
     month (formato YYYY-MM)
-    createdAt, updatedAt
+    createdAt
 
 Goals
     id
@@ -81,60 +53,68 @@ Goals
     targetAmount
     currentAmount
     deadline (fecha objetivo)
-    createdAt, updatedAt
+    createdAt
 
-🔁 Relaciones
+Relaciones
 - User tiene muchas Transactions, Budgets, Goals
 - Transaction pertenece a User y Category
 - Budget pertenece a User y Category
-- Category puede ser global o personalizada por usuario
+- Category es global y suministrada por cada banco que tiene su propia lista de categorias particular
 
-🧠 Funcionalidades del backend
+Funcionalidades del backend
 - Registro/Login con JWT
-- CRUD de transacciones
-- CRUD de presupuestos
-- CRUD de metas financieras
-- API para obtener:
-    - Resumen mensual (ingresos, gastos, balance)
-    - Transacciones por categoría/mes
-    - Alertas si se supera el presupuesto
-    - Progreso hacia una meta
+- CRUD de usuarios
+- CRUD de presupuestos (budgets)
+- CRUD de metas financieras (goals)
 
-📦 Controladores por tabla
+API para obtener:
+- ingresos/egresos del mes actual
+- balance
+- presupuestos activos y si están pasados
+- progreso en metas
 
-🔐 AuthController
+
+Controladores por tabla
+
+AuthController
 // register, login, logout, getProfile
 
-💸 TransactionController
+TransactionController
 // GET /transactions => lista todas las transacciones del usuario
 // GET /transactions/:id => detalle de una transacción
-// POST /transactions => crea una transacción
-// PUT /transactions/:id => actualiza
-// DELETE /transactions/:id => elimina
 // GET /summary => resumen mensual (gastos/ingresos por categoría)
 
-🏷️ CategoryController
-// GET /categories => lista categorías globales + del usuario
-// POST /categories => (si permites personalizadas)
-// DELETE /categories/:id => eliminar categoría personalizada
+CategoryController
+// GET /categories => lista categorías globales
 
-🧾 BudgetController
+BudgetController
 // GET /budgets => todos los presupuestos del usuario
 // POST /budgets => crear presupuesto para categoría/mes
 // PUT /budgets/:id => actualizar presupuesto
 // DELETE /budgets/:id => eliminar presupuesto
 
-🎯 GoalController
+GoalController
 // GET /goals => metas del usuario
 // POST /goals => crear meta
 // PUT /goals/:id => actualizar progreso
 // DELETE /goals/:id => eliminar meta
 
-🛠️ Extra API endpoint útil
+Extra API endpoint útil
 GET /dashboard
 // Devuelve:
 // - ingresos/egresos del mes actual
 // - balance
 // - presupuestos activos y si están pasados
 // - progreso en metas
+
+PUESTA EN MARCHA:
+simplemente hacer:
+    docker compose up --build
+
+    Se crearan el contenedor de la aplicacion y el de la base de datos, que estará poblada con datos falsos.
+    Si surge algun problema con el puerto 3310, hay que configurar .env y cambiarlo a otro que esté disponible.
+
+Llamar a la aplicacion con
+    localhost:3000
+
 

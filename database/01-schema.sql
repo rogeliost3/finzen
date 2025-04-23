@@ -48,7 +48,6 @@ DROP TABLE IF EXISTS `finzen`.`Categories` ;
 CREATE TABLE IF NOT EXISTS `finzen`.`Categories` (
   `idCategory` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `type` ENUM('income', 'expense') NOT NULL,
   PRIMARY KEY (`idCategory`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 61

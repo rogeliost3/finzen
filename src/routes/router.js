@@ -1,4 +1,7 @@
 import { Router } from "express";
+import apiRouter from "./api/apiRouter.js";
+// import viewRouter from "./views/viewRouter.js";
+
 // import routeRouter from "./routeRouter.js";
 // import memberRouter from "./memberRouter.js";
 // import authRouter from "./authRouter.js";
@@ -12,15 +15,23 @@ router.get("/", (req, res) => {
     const error = req.query.error || null;
     console.log("message: ", message);
     console.log("error: ", error);
-    res.render("home", {
-        message, error 
-    });
+    // res.render("home", {
+    //     message, error 
+    // });
+    res.send("home", { message, error });
 });
+
+
+router.use("/api",apiRouter);
+// router.use("/",viewRouter);
+
 
 // router.use("/route", routeRouter);
 // router.use("/member", memberRouter);
 // router.use("/auth", authRouter);
 // router.use("/trip", tripRouter);
+
+
 
 
 
