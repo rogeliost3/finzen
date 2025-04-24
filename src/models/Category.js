@@ -7,7 +7,7 @@ const Category = connection.define('Category', {
 },
 {
   tableName: 'Categories',       // 👈 nombre exacto de la tabla en la DB
-  freezeTableName: true,      // 👈 evita que Sequelize pluralice "Budget"
+  freezeTableName: true,      // 👈 evita que Sequelize pluralice "Category"
 });
 
 export default Category;

@@ -9,7 +9,7 @@ const Transaction = connection.define('Transaction', {
   date: { type: DataTypes.DATEONLY, allowNull: false }
 }, {
   tableName: 'Transactions',       // 👈 nombre exacto de la tabla en la DB
-  freezeTableName: true,      // 👈 evita que Sequelize pluralice "Budget"
+  freezeTableName: true,      // 👈 evita que Sequelize pluralice "Transaction"
   timestamps: true,
 });
 

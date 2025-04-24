@@ -9,7 +9,7 @@ const User = connection.define('User', {
   isAdmin: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
 },{
   tableName: 'Users',       // 👈 nombre exacto de la tabla en la DB
-  freezeTableName: true,      // 👈 evita que Sequelize pluralice "Budget"
+  freezeTableName: true,      // 👈 evita que Sequelize pluralice "User"
 });
 
 export default User;

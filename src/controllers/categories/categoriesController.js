@@ -1,6 +1,4 @@
-// import Product from "../../models/product.js";
-// import Seller from "../../models/seller.js";
-// import standModel from "../../models/stand.js";
+
 import Category from "../../models/Category.js";
 // import { StandNameNotProvided, IncorrectStandSize, CategoryNotProvided, CategoryNotFound } from "../../utils/errors.js";
 

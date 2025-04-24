@@ -35,7 +35,6 @@ Transactions
 Categories
     id
     name (e.g. "Alimentación", "Ocio", etc.)
-    type (income | expense)
     userId (FK opcional si son personalizadas)
 
 Budgets

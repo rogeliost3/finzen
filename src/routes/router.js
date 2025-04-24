@@ -3,7 +3,7 @@ import apiRouter from "./api/apiRouter.js";
 // import viewRouter from "./views/viewRouter.js";
 
 // import routeRouter from "./routeRouter.js";
-// import memberRouter from "./memberRouter.js";
+// import userRouter from "./userRouter.js";
 // import authRouter from "./authRouter.js";
 // import tripRouter from "./tripRouter.js";
 
@@ -27,7 +27,7 @@ router.use("/api",apiRouter);
 
 
 // router.use("/route", routeRouter);
-// router.use("/member", memberRouter);
+// router.use("/user", userRouter);
 // router.use("/auth", authRouter);
 // router.use("/trip", tripRouter);
 

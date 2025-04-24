@@ -115,13 +115,10 @@ MIERCOLES 23 abril 2025 16:00h
 AuthController
 // register, login, logout, getProfile
 
-TransactionController
-// GET /transactions => lista todas las transacciones del usuario
-// GET /transactions/:id => detalle de una transacción
-// GET /summary => resumen mensual (gastos/ingresos por categoría)
-
 CategoryController
 // GET /categories => lista categorías globales
+// GET /categories/id => ver una categoria por id
+
 
 Usaré la estructura de API separado de Views de Merk2
 
@@ -233,10 +230,38 @@ He tenido que quitar el campo type de Categories:
     3. Lo quito del model de sequelize
     4. Lo quito de los scripts 01-schema.sql y 02-dummydata.sql
 
-Ya devuelve las categorias, 23:30
+Ya devuelve las categorias, y categorias por id, 23:30
 
 
 JUEVES:
+12:00 Falta eliminar, listar y editar usuarios
+en apiRouter añado la ruta a la edicion de usuarios /user que apunta a userAPIRouter
+creo el archivo userAPIRouter para manejar listado, edicion y borrado de usuarios
+en userAPIRouter añado las ruas de listado /, /:id/ borrado /:id/remove y edicion /:id/edit
+
+creo la carpeta controllers/user
+creo userController.js que contiene las llamadas a sequelize getAll, getByID, edit, y remove
+creo userAPIController.js que gestiona las llamadas a traves de API de lo anterior
+creo la funcion isAdmin en authMiddleware y lo añado al userAPIRouter:
+        router.get("/:id", isLoggedInAPI, isAdmin, userAPIController.getByID);
+en cada entrada que deba ser realizada solo por administradores.
+
+Pruebas de listado y borrado de usuarios correcta
+Se comprueba ademas que los CASCADE funcionan, al borrar un usuario tambien borra sus Budgets, Goals y Transactions
+
+
+TransactionController
+// POST /transaction => lista todas las transacciones del usuario
+// POST /transaction/getCatAndDate => movimientos de una categoria en un rango de fechas
+
+Se copian los controladores API y no API y se cambian los nombre
+se le borran los metodos que no interesan
+el idUser que deben usar lo deben tomar del middleware isLoggedInAPI que se lo pasa
+Se activan los errores y el archivo de errores de merk2 se copia y se editar
+Se crean los endpoint transaction y getCatAndDate, controllers y routers
+
+
+
 Extra API endpoint útil
 GET /dashboard
 // Devuelve:

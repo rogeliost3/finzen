@@ -1,22 +1,22 @@
 import { verifyToken } from "../utils/token.js";
-
-// function isLoggedInSession(req,res,next){
-//     const user  = req.session.user;
-//     if(!user){
-//         return res.redirect("/login?error=You+are+not+logged+in")
-//     }
-//     // lo ideal sería comprobar en base de datos que el usuario existe
-//     next();
-// }
+/*
+usuario 1 juan@gmail.com
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjEsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NDU1Mjg5MzIsImV4cCI6MTc0NTYxNTMzMn0.c6QZLvE-VfU329pQu37RF0D2EuncFsTKUnUAy0bmhSQ
+*/
 function isLoggedInAPI(req, res, next) {
     const authorization = req.headers.authorization;
+    console.log("req.headers: ", req.headers);
     console.log("authorization", authorization);
 
     if (!authorization || !authorization.startsWith('Bearer ')) {
-        return res.status(401).json({ error: "You shall not pass1" });
+        return res.status(401).json({ error: "Invalid API Key" });
     }
     let token = authorization.split(" ");
     token = token.pop();
+    console.log("token a verificar: ", token);
+    if (!token) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
     try {
         const result = verifyToken(token);
         console.log("token verified", result);
@@ -27,49 +27,33 @@ function isLoggedInAPI(req, res, next) {
             }
             next();
         } else {
-            return res.status(401).json({ error: "You shall not pass2" });
+            return res.status(401).json({ error: "You shall not pass" });
         }
     } catch (error) {
         console.error("Token verification error:", error.message);
         return res.status(401).json({ error: "Invalid or expired token" });
     }
 }
-// async function isSeller(req,res,next){
-//     const user  = req.session.user;
-//     if(!user){
-//         return res.redirect("/login?error=You+are+not+logged+in")
-//     }
-//     if(user.role ==="seller"){
-//         next();
-//     }else{
-//         return res.redirect("/login?error=You+are+not+a+seller")
-//     }
-// }
 
-// function isNotLoggedIn(req,res,next){
-//     console.log("authMiddleware:isNotLoggedIn");
-//     const member = req.session.member;
-//     if(member){
-//         return res.redirect("/?error=You+are+already+logged+in")
-//     }
-//     next();
-// }
 
-// async function isAdmin(req,res,next){
-//     console.log("authMiddleware:isAdmin");
-//     const member  = req.session.member;
-//     if(!member){
-//         return res.redirect("/?error=You+are+not+logged+in")
-//     }
-//     if(member.isAdmin){
-//         next();
-//     }else{
-//         return res.redirect("/?error=You+are+not+a+admin")
-//     }
-// }
+async function isAdmin(req, res, next) {
+    console.log("authMiddleware:isAdmin");
+
+    const user = req.user; // Viene del token verificado por isLoggedInAPI
+
+    if (!user) {
+        return res.status(401).json({ error: "You are not logged in" });
+    }
+
+    if (user.isAdmin) {
+        return next(); // Usuario es admin, puede continuar
+    }
+
+    return res.status(403).json({ error: "You are not an admin" });
+}
 
 
 export {
-    // isLoggedInSession,
-    isLoggedInAPI
+    isLoggedInAPI,
+    isAdmin
 }
