@@ -1,6 +1,7 @@
 
 import Category from "../../models/Category.js";
-// import { StandNameNotProvided, IncorrectStandSize, CategoryNotProvided, CategoryNotFound } from "../../utils/errors.js";
+// import { validationResult } from 'express-validator';
+import Errors from "../../utils/errors.js";
 
 
 async function getAll() {
@@ -10,7 +11,12 @@ async function getAll() {
 
 
 async function getByID(id) {
+    console.log("categoriesController:getByID");
+    // Errors.throwErrors(validationResult(req));
     const category = await Category.findByPk(id);
+    if (!category) {
+        throw new Errors.CategoryNotFound();
+    }
     return category;
 }
 

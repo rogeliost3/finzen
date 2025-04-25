@@ -1,31 +1,26 @@
-// import { userNameNotProvided, IncorrectuserSize, userCategoryNotProvided, userCategoryNotFound } from "../../utils/errors.js";
+import Errors from "../../utils/errors.js"; 
 import User from "../../models/User.js";
+// import { validationResult } from 'express-validator';
 
 async function getAll() {
     const users = await User.findAll();
     return users;
 }
 
-
 async function getByID(id) {
+    // Errors.throwErrors(validationResult(req)); 
+    
     const user = await User.findByPk(id);
     return user;
 }
 
-// async function create(data) {
-//     const response = await User.create(data);
-//     return response;
-// }
-
 async function edit(id, data) {
+    // Errors.throwErrors(validationResult(req)); 
+
     const user = await User.findByPk(id);
-    console.log("user: ", user);
     if (user === null) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        throw new Errors.UserNotFound();
     }
-    // Hacer comprobaciones de name, email y password.
     const result = await User.update(
         data,
         {
@@ -39,12 +34,11 @@ async function edit(id, data) {
 }
 
 async function remove(id) {
+    // Errors.throwErrors(validationResult(req)); 
+    
     const user = await User.findByPk(id);
-    console.log("user: ", user);
     if (user === null) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        throw new Errors.UserNotFound();
     }
     const response = await User.destroy({
         where: {
@@ -57,7 +51,6 @@ async function remove(id) {
 export {
     getAll,
     getByID,
-    // create,
     edit,
     remove
 }
@@ -65,7 +58,6 @@ export {
 export default {
     getAll,
     getByID,
-    // create,
     edit,
     remove
 };

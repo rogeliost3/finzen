@@ -1,14 +1,15 @@
 import { Router } from "express";
 import authApiController from "../../controllers/auth/authApiController.js";
+import { validateUserData, validateLoginData } from "../../middlewares/validationMiddleware.js";
+import Errors from "../../utils/errors.js";
+
 const router = Router();
 
+// /api/register Cualquiera puede registrarse
+router.post("/register", ...validateUserData(), Errors.throwErrors, authApiController.register); 
 
-router.post("/register",authApiController.register); // /api/register Cualquiera puede registrarse, sin control middleware
-router.post("/login",authApiController.login); // /api/login Cualquier puede logearse, sin control middleware
-// router.get("/logout",authApiController.logout); //  No se pone el middleware porque no se necesita para hacer logout
+// /api/login Cualquier puede logearse
+router.post("/login", ...validateLoginData(), Errors.throwErrors, authApiController.login); 
 
-//JUEVES, ACABAR CRUD DE USER
-// router.delete("/delete",isAdmin,userApiController.profile);
-// router.post("/edit",isAdmin,userApiController.edit);
 
 export default router;

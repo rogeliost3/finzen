@@ -1,36 +1,31 @@
 import User from "../../models/User.js";
 import { hash, compare } from "../../utils/bcryptjs.js";
-import {
-    UserNameNotProvided,
-    UserEmailNotProvided,
-    UserPasswordNotProvided,
-    UserEmailAlreadyExists,
-    UserInvalidCredentials
-} from "../../utils/errors.js";
+// import { validationResult } from 'express-validator';
+import Errors from "../../utils/errors.js";
+
 
 async function register(userData) {
-    console.log(userData);
-    if (!userData.name) {
-        throw new UserNameNotProvided();
-    }
-    if (!userData.email) {
-        throw new UserEmailNotProvided();
-    }
-    if (!userData.password) {
-        throw new UserPasswordNotProvided();
-    }
+    console.log("Datos del usuario a registrar:", userData);
+
+    // Errors.throwErrors(validationResult(req)); 
+
     // TODO passwordConfirm 
+
+    // Comprobar si el email ya existe
     const userExists = await User.findOne({
         where: {
             email: userData.email
         }
     })
     if (userExists) {
-        throw new UserEmailAlreadyExists();
+        throw new Errors.UserEmailAlreadyExists();
     }
+
+    // Solo puede haber un admin
     if (userData.isAdmin) {
         userData.isAdmin = false
     }
+
     const hashedPassword = await hash(userData.password);
 
     userData.password = hashedPassword;
@@ -39,27 +34,26 @@ async function register(userData) {
 }
 
 async function login(email, password) {
-    if (!email) {
-        throw new UserEmailNotProvided();
-    }
-    if (!password) {
-        throw new UserPasswordNotProvided();
-    }
+
+    // Errors.throwErrors(validationResult(req));
+
+    // Comprobar si el email existe
     const userData = await User.findOne({
         where: {
             email: email
         }
     })
     if (!userData) {
-        throw new UserInvalidCredentials();
+        throw new Errors.UserNotFound();
     }
+
+    // Comprobar la contraseña
     const matchPassword = await compare(password, userData.password);
-    if (matchPassword) { // si la contraseña es correcta
-        console.log(`User found: ${userData.idUser}`); // Agregar log aquí
+    if (matchPassword) {
         const user = await User.findByPk(userData.idUser);
         return user
     } else {
-        return "Invalid credentials"; // throw new UserInvalidCredentials();
+        throw new Errors.UserInvalidCredentials();
     }
 }
 

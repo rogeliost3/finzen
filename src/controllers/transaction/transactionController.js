@@ -1,4 +1,3 @@
-// import { userNameNotProvided, IncorrectuserSize, userCategoryNotProvided, userCategoryNotFound } from "../../utils/errors.js";
 import {Transaction, Category} from "../../models/E-R.js";
 import { Op } from "sequelize";
 
@@ -13,6 +12,7 @@ async function getAll(idUser) {
 }
 
 async function getByCategoryAndDate(idUser,idCategory,dateInit,dateEnd) {
+  
   const transactions = await Transaction.findAll({
       attributes: ['date', 'type', 'amount', 'description' ],
       where: {

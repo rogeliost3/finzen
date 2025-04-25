@@ -62,9 +62,9 @@ INSERT INTO Categories (idCategory, name) VALUES (59, 'Transporte público');
 INSERT INTO Categories (idCategory, name) VALUES (60, 'Tren, avión, transporte');
 
 INSERT INTO `Users` VALUES /* Las contraseñas son 1234 en todos */
-(5,'admin','admin@gmail.com','$2b$10$Cihkkdcr5YktmJhHUUnPReL6sxvqHR5x7jfQTy/ImQcPJIEulh0VO',1),
-(6,'Juan Ramon Gomez Laserna','juan@gmail.com','$2b$10$PJ.kMtM08jJylZzafAw9luy3dkjqdpBqWD4956NQaJ/zltCR..Bce',0),
-(7,'Pedro Pero Perez Crespo','pedro@gmail.com','$2b$10$fQehzBv5UyRT20M36UN1Xu0/wvG61ACDbHj9p3UjkF67J3d7WYeCe',0);
+(1,'admin','admin@gmail.com','$2b$10$Cihkkdcr5YktmJhHUUnPReL6sxvqHR5x7jfQTy/ImQcPJIEulh0VO',1),
+(2,'Juan Ramon Gomez Laserna','juan@gmail.com','$2b$10$PJ.kMtM08jJylZzafAw9luy3dkjqdpBqWD4956NQaJ/zltCR..Bce',0),
+(3,'Pedro Pero Perez Crespo','pedro@gmail.com','$2b$10$fQehzBv5UyRT20M36UN1Xu0/wvG61ACDbHj9p3UjkF67J3d7WYeCe',0);
 
 
 INSERT INTO Transactions (idTransaction, idUser, type, amount, description, idCategory, date, createdAt, updatedAt) VALUES (1, 1, 'expense', 376.86, 'Pago relacionado con Mantenimiento del vehículo', 33, '2025-02-04', NOW(), NOW());

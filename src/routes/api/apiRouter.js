@@ -3,6 +3,8 @@ import categoriesAPIRouter from "./categoriesAPIRouter.js";
 import transactionAPIRouter from "./transactionAPIRouter.js";
 import authAPIRouter from "./authAPIRouter.js";
 import userAPIRouter from "./userAPIRouter.js";
+import budgetAPIRouter from "./budgetAPIRouter.js";
+
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -14,5 +16,6 @@ router.use("/categories", categoriesAPIRouter);
 router.use("/", authAPIRouter); // /api
 router.use("/user", userAPIRouter); // /api/user
 router.use("/transaction", transactionAPIRouter); // /api/transaction
+router.use("/budget", budgetAPIRouter);
 
 export default router

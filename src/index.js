@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import router from './routes/router.js';
 import session from 'express-session';
+import errorHandler from './middlewares/errorHandlerMiddleware.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -49,6 +50,9 @@ app.use('/', router);
 app.get('/test', (req, res) => {
     res.send('Conexión a la base de datos establecida');
 })
+
+//Middleware manejador global de errores
+app.use(errorHandler);
 
 // Iniciar servidor
 app.listen(PORT, () => {
