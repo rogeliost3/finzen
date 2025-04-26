@@ -1,13 +1,9 @@
 import User from "../../models/User.js";
 import { hash, compare } from "../../utils/bcryptjs.js";
-// import { validationResult } from 'express-validator';
 import Errors from "../../utils/errors.js";
 
 
 async function register(userData) {
-    console.log("Datos del usuario a registrar:", userData);
-
-    // Errors.throwErrors(validationResult(req)); 
 
     // TODO passwordConfirm 
 
@@ -35,8 +31,6 @@ async function register(userData) {
 
 async function login(email, password) {
 
-    // Errors.throwErrors(validationResult(req));
-
     // Comprobar si el email existe
     const userData = await User.findOne({
         where: {
@@ -44,7 +38,7 @@ async function login(email, password) {
         }
     })
     if (!userData) {
-        throw new Errors.UserNotFound();
+        throw new Errors.NotFound();
     }
 
     // Comprobar la contraseña

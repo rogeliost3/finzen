@@ -4,7 +4,7 @@ import Category from "../../models/Category.js";
 import Errors from "../../utils/errors.js";
 
 
-async function getAll() {
+async function getAll(idUser) {
     const categories = await Category.findAll();
     return categories;
 }
@@ -15,7 +15,7 @@ async function getByID(id) {
     // Errors.throwErrors(validationResult(req));
     const category = await Category.findByPk(id);
     if (!category) {
-        throw new Errors.CategoryNotFound();
+        throw new Errors.NotFound();
     }
     return category;
 }

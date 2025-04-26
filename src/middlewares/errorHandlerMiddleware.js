@@ -1,6 +1,5 @@
 // Middleware global para manejar errores
 function errorHandler(err, req, res, next) {
-    console.log("errorHandler");
     console.error(err); // Para ver el error en consola
     if (err instanceof Error) {
         return res.status(err.statusCode || 500).json({

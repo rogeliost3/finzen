@@ -3,7 +3,7 @@ import categoriesController from "./categoriesController.js";
 async function getAll(req, res) {
     // try {
     console.log("categoriesAPIController:getAll");
-        const cats = await categoriesController.getAll();
+        const cats = await categoriesController.getAll(req.user.idUser);
         res.json(cats);
     // } catch (error) {
     //     console.error(error);

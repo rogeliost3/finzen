@@ -1,11 +1,5 @@
 import { Router } from "express";
 import apiRouter from "./api/apiRouter.js";
-// import viewRouter from "./views/viewRouter.js";
-
-// import routeRouter from "./routeRouter.js";
-// import userRouter from "./userRouter.js";
-// import authRouter from "./authRouter.js";
-// import tripRouter from "./tripRouter.js";
 
 
 const router = Router();
@@ -13,26 +7,10 @@ const router = Router();
 router.get("/", (req, res) => {
     const message = req.query.message || null;
     const error = req.query.error || null;
-    console.log("message: ", message);
-    console.log("error: ", error);
-    // res.render("home", {
-    //     message, error 
-    // });
     res.send("home", { message, error });
 });
 
-
 router.use("/api",apiRouter);
-// router.use("/",viewRouter);
-
-
-// router.use("/route", routeRouter);
-// router.use("/user", userRouter);
-// router.use("/auth", authRouter);
-// router.use("/trip", tripRouter);
-
-
-
 
 
 export default router;
