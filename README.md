@@ -17,7 +17,7 @@ Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + S
 - email
 - password (hasheada)
 
-##Transactions
+## Transactions
 - id
 - userId (FK)
 - type (income | expense)
