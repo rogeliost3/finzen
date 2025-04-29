@@ -61,38 +61,44 @@ Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + S
 
 # Endpoints
 ## Authentication
-```POST api/register                   registro de un usuario              {name, email, password}```
-```POST api/login                      login de un usuario                 {email, password}```
+```POST api/register                   registro de un usuario              {name, email, password}```  
+```POST api/login                      login de un usuario                 {email, password}```  
 
 ## Users
-```GET api/user/                       listado de usuarios, solo admin```
-```PUT api/user/:id/edit               edicion de usuarios, solo admin     {name, email, password}```
-```DELETE api/user/:id/remove          borrado de usuarios, solo admin```
-```GET api/user/:id                    ver un usuario por su id, solo admin```
+```GET api/user/                       listado de usuarios, solo admin```  
+```PUT api/user/:id/edit               edicion de usuarios, solo admin     :id {name, email, password}```  
+```DELETE api/user/:id/remove          borrado de usuarios, solo admin     :id ```  
+```GET api/user/:id                    ver usuario por su id, solo admin   :id```  
 
 ## Categories
-```GET api/categories/                 listado de categorias del usuario```
-```GET api/categories/:id              ver una categoria por su id```
+```GET api/categories/                 listado de categorias del usuario```  
+```GET api/categories/:id              ver una categoria por su id.        :id```  
 
 ## Transactions, del usuario logeado
-```GET /:id                            ver un apunte por id, del usuario logeado```
-```GET api/transaction/                ver todos los movimientos bancarios del usuario```
-```GET api/transaction/getCatAndDate   filtrar por categoria y rango de fechas. {idCategory, dateInit, dateEnd} YYYY-MM-DD```
+```GET /:id                            ver un apunte por id, del usuario```  
+```                                    logeado                             :id```  
+```GET api/transaction/                ver todos los movimientos bancarios del usuario```  
+```GET api/transaction/getCatAndDate   filtrar por categoria y rango de fechas. {idCategory, dateInit, dateEnd} YYYY-MM-DD```  
 
 ## Goals, del usuario logeado
-```POST api/goal/create                crear un objetivo {title, targetAmount, currentAmount, deadline} YYYY-MM-DD```
-```PUT api/goal/income                 aportación a un objetivo {idGoal, amount}```
-```GET api/goal/report                 reporte de los objetivos pasados logrados y no logrados, y futuros logrados y pendientes```
-```PUT api/goal/:id/edit               edicion de un objetivo por id, {title, targetAmount, currentAmount, deadline} YYYY-MM-DD```
-```DELETE api/goal/:id/remove          borrado de un objetivo por su id```
+```POST api/goal/create                crear un objetivo.                   {title, targetAmount, currentAmount, deadline}```  
+```                                    Formato de fechas: YYYY-MM-DD```  
+```PUT api/goal/income                 aportación a un objetivo             {idGoal, amount}```  
+```GET api/goal/report                 reporte de los objetivos pasados```  
+```                                    logrados y no logrados, y futuros```  
+```                                    logrados y pendientes.```  
+```PUT api/goal/:id/edit               edicion de un objetivo por id,       :id {title, targetAmount, currentAmount, deadline}```  
+```DELETE api/goal/:id/remove          borrado de un objetivo por su id     :id```  
 
 ## Budgets, del usuario logeado
-```GET api/budget/                     listado de presupuestos del usuario logeado```
-```POST api/budget/create              crear un presupuesto {idCategory, limitAmount, month}```
-```GET api/budget/report/:id/          reporte anual de presupuestos, del año :id```
-```PUT api/budget/:id/edit             edicion de presupuesto por id, {idCategory, limitAmount, month}```
-```DELETE api/budget/:id/remove        borrado de un presupuesto por id```
-```GET api/budget/:id                  ver un presupuesto por id```
+```GET api/budget/                     listado de presupuestos del usuario  ```  
+```                                    logeado.```  
+```POST api/budget/create              crear un presupuesto                 {idCategory, limitAmount, month}```  
+```GET api/budget/report/:id/          reporte anual de presupuestos```  
+```                                    del año indicado en :id              :id```  
+```PUT api/budget/:id/edit             edicion de presupuesto por id,       {idCategory, limitAmount, month}```  
+```DELETE api/budget/:id/remove        borrado de un presupuesto por id     :id```  
+```GET api/budget/:id                  ver un presupuesto por id            :id```
 
 # PUESTA EN MARCHA:
 Generar el contenedor docker:
