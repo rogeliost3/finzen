@@ -8,8 +8,8 @@ const Transaction = connection.define('Transaction', {
   description: { type: DataTypes.STRING },
   date: { type: DataTypes.DATEONLY, allowNull: false }
 }, {
-  tableName: 'Transactions',       // 👈 nombre exacto de la tabla en la DB
-  freezeTableName: true,      // 👈 evita que Sequelize pluralice "Transaction"
+  tableName: 'Transactions',       // nombre exacto de la tabla en la DB
+  freezeTableName: true,      // evita que Sequelize pluralice "Transaction"
   timestamps: true,
 });
 
