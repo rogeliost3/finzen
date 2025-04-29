@@ -28,7 +28,8 @@ async function getByCategoryAndDate(idUser,idCategory,dateInit,dateEnd) {
           model: Category,
           attributes: ['name']
         }
-      ]
+      ],
+      order: [['date', 'ASC']]
     });
   return transactions;
 }
