@@ -54,7 +54,7 @@ Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + S
 - CRUD de usuarios
 - CRUD de presupuestos (budgets)
 - CRUD de metas financieras (goals)
-- Transactions obtenidas por API de entidad bancaria,
+- Transactions obtenidas por API de entidad bancaria. (Aun por implementar, se manejan datos ficticios)
 - Reporte anual de presupuestos
 - Reporte de objetivos
 - Filtrado de transacciones por categoría y rango de fechas
