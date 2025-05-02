@@ -4,10 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": "../Routend"
-		},
-		{
-			"path": "../../BACKEND/merk2"
+			"path": "../../REACT/merk2"
 		}
 	],
 	"settings": {
