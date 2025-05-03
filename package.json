@@ -1,0 +1,39 @@
+{
+  "name": "finzen",
+  "version": "1.0.0",
+  "description": "Proyecto individual de contabilidad personal y objetivos de ahorro",
+  "main": "src/index.js",
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.0",
+    "pug": "^3.0.3",
+    "sequelize": "^6.37.7"
+  },
+  "scripts": {
+    "start": "nodemon --legacy-watch src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogeliost3/finzen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rogeliost3/finzen/issues"
+  },
+  "homepage": "https://github.com/rogeliost3/finzen#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9"
+  }
+}
