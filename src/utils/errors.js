@@ -101,7 +101,7 @@ class NameNotProvided extends Error {
     }
 }
 
-const INVALID_DATE=605;
+const INVALID_DATE=601;
 class InvalidDate extends Error {
     constructor() {
         super("Invalid date" );
@@ -110,7 +110,7 @@ class InvalidDate extends Error {
     }
 }   
 
-const INVALID_FORMAT=601;
+const INVALID_FORMAT=602;
 class InvalidFormat extends Error {
     constructor() {
         super("Invalid format" );
@@ -119,7 +119,7 @@ class InvalidFormat extends Error {
     }
 }
 
-const NOT_FOUND=602;
+const NOT_FOUND=603;
 class NotFound extends Error {
     constructor() {
         super("Not found");
@@ -128,7 +128,7 @@ class NotFound extends Error {
     }
 }
 
-const DATA_IS_EMPTY=603;
+const DATA_IS_EMPTY=604;
 class DataIsEmpty extends Error {
     constructor() {
         super("Data cannot be empty" );
@@ -137,7 +137,7 @@ class DataIsEmpty extends Error {
     }
 }
 
-const MUST_BE_NUMBER=604;
+const MUST_BE_NUMBER=605;
 class MustBeNumber extends Error {
     constructor() {
         super("It must be a number" );
@@ -146,7 +146,7 @@ class MustBeNumber extends Error {
     }
 }
 
-const ALREADY_ACHIEVED=605;
+const ALREADY_ACHIEVED=606;
 class AlreadyAchieved extends Error {
     constructor() {
         super("It has already been achieved" );
@@ -155,7 +155,7 @@ class AlreadyAchieved extends Error {
     }
 }
 
-const ALREADY_EXPIRED=605;
+const ALREADY_EXPIRED=607;
 class AlreadyExpired extends Error {
     constructor() {
         super("It has already expired" );
@@ -171,7 +171,7 @@ SERVER ERRORS
 const UNHANDLED_ERROR=500;
 class UnhandledError extends Error {
     constructor() {
-        super("Unhandled error");
+        super("Unhandled error/Server error");
         this.idError=UNHANDLED_ERROR;
         this.statusCode = 500;
     }
@@ -199,11 +199,20 @@ class NoTokenProvided extends Error {
     }  
 }
 
-const INVALID_API_KEY=203;
+const INVALID_API_KEY=202;
 class InvalidApiKey extends Error { 
     constructor() {
         super("Invalid API Key");
         this.idError=INVALID_API_KEY;
+        this.statusCode = 401;
+    }  
+}
+
+const UNAUTHORIZED=203;
+class Unauthorized extends Error { 
+    constructor() {
+        super("Unauthorized");
+        this.idError=UNAUTHORIZED;
         this.statusCode = 401;
     }  
 }
@@ -235,6 +244,7 @@ function throwErrors(req,res,next) {
                 case NO_TOKEN_PROVIDED: throw new NoTokenProvided();
                 case INVALID_API_KEY: throw new InvalidApiKey();
                 case INVALID_DATE: throw new InvalidDate();
+                case UNAUTHORIZED: throw new Unauthorized();
                 default:
                     throw new UnhandledError();
             }
@@ -264,6 +274,8 @@ export default {
     NO_TOKEN_PROVIDED,
     INVALID_API_KEY,
     INVALID_DATE,
+    UNAUTHORIZED,
+    UNHANDLED_ERROR,
     DataIsEmpty,
     MustBeNumber,
     NameNotProvided,
@@ -284,5 +296,7 @@ export default {
     NoTokenProvided,
     InvalidApiKey,
     InvalidDate,
+    Unauthorized,
+    UnhandledError,
     throwErrors
 }

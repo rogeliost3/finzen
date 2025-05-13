@@ -11,8 +11,10 @@ async function login(req, res) {
         const { email, password } = req.body;
         const result = await authController.login(email, password);
         const data = {
+            name: result.name,
             idUser: result.idUser,
-            isAdmin: result.isAdmin
+            isAdmin: result.isAdmin,
+            email: result.email
         }
         const token = createToken(data);
         res.cookie('token', token, {
@@ -21,7 +23,10 @@ async function login(req, res) {
             sameSite: 'Strict', // Protege contra CSRF
             maxAge: 1000 * 60 * 60 * 1 // Expira en 1 h
           });
-        res.json({ token: token });
+        /* aunque el idUser, name y isAdmin esten en el token, 
+         estos datos no están accesibles al frontend, 
+         por lo que se enviarán accesibles en data */
+        res.json({ token: token, user:data });
 }
 
 function logout(req, res) {
@@ -30,11 +35,19 @@ function logout(req, res) {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'Strict',
       });
-    res.json({ message: 'Logout exitoso' });
+    res.json({ message: 'Cookie deleted' });
+}
+
+async function getUserInfo(req,res){
+    const idUser = req.user.idUser;
+    let result = await authController.getUserInfo(idUser);
+    result.idUser = idUser;
+    res.send({user:result});
 }
 
 export default {
     register,
     login,
-    logout
+    logout,
+    getUserInfo
 }

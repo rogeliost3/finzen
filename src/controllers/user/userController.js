@@ -1,6 +1,6 @@
 import Errors from "../../utils/errors.js"; 
 import User from "../../models/User.js";
-// import { validationResult } from 'express-validator';
+import { hash } from "../../utils/bcryptjs.js";
 
 async function getAll() {
     const users = await User.findAll();
@@ -8,19 +8,17 @@ async function getAll() {
 }
 
 async function getByID(id) {
-    // Errors.throwErrors(validationResult(req)); 
-    
     const user = await User.findByPk(id);
     return user;
 }
 
 async function edit(id, data) {
-    // Errors.throwErrors(validationResult(req)); 
-
+    console.log("userController:edit:data: ", data);
     const user = await User.findByPk(id);
     if (user === null) {
-        throw new Errors.UserNotFound();
+        throw new Errors.NotFound();
     }
+    data.password = await hash(data.password);
     const result = await User.update(
         data,
         {
@@ -34,11 +32,9 @@ async function edit(id, data) {
 }
 
 async function remove(id) {
-    // Errors.throwErrors(validationResult(req)); 
-    
     const user = await User.findByPk(id);
     if (user === null) {
-        throw new Errors.UserNotFound();
+        throw new Errors.NotFound();
     }
     const response = await User.destroy({
         where: {

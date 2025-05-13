@@ -7,9 +7,9 @@ import Errors from "../../utils/errors.js";
 const router = Router();
 
 router.get("/", isLoggedInAPI, isAdmin, userAPIController.getAll);
-router.put("/:id/edit", isLoggedInAPI, isAdmin, ...validateId(), ...validateUserData(), Errors.throwErrors, userAPIController.edit);
-router.delete("/:id/remove", isLoggedInAPI, isAdmin, ...validateId(), Errors.throwErrors, userAPIController.remove);
-router.get("/:id", isLoggedInAPI, isAdmin, ...validateId(), Errors.throwErrors, userAPIController.getByID);
+router.put("/:id/edit", isLoggedInAPI, ...validateId(), ...validateUserData(), Errors.throwErrors, userAPIController.edit);
+router.delete("/:id/remove", isLoggedInAPI, ...validateId(), Errors.throwErrors, userAPIController.remove);
+router.get("/:id", isLoggedInAPI, ...validateId(), Errors.throwErrors, userAPIController.getByID);
 
 
 export default router;

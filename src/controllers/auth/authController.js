@@ -25,7 +25,9 @@ async function register(userData) {
     const hashedPassword = await hash(userData.password);
 
     userData.password = hashedPassword;
-    const result = await User.create(userData);
+
+    const { idUser, ...safeData } = userData;
+    const result = await User.create(safeData);
     return result;
 }
 
@@ -51,7 +53,13 @@ async function login(email, password) {
     }
 }
 
+async function getUserInfo(id) {
+    const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
+    return user;
+}
+
 export default {
     register,
     login,
+    getUserInfo
 }

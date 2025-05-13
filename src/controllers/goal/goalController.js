@@ -3,13 +3,16 @@ import Goal from "../../models/Goal.js";
 import { Op, Sequelize } from "sequelize";
 
 async function create(idUser, goalData) {
-    goalData.idUser = idUser;
-    return await Goal.create(goalData);
+    console.log("goalController:create:goalData: ", goalData);
+    const {idGoal, createdAt, ...safeData} = goalData;
+    safeData.idUser = idUser;
+    console.log("goalController:create:safeData: ", safeData);
+    return await Goal.create(safeData);
 }
 
 async function getAll(idUser) {
     const goals = await Goal.findAll({
-        attributes: ['idGoal', 'idUser', 'title', 'targetAmount', 'currentAmount', 'deadline'],
+        attributes: ['idGoal', 'idUser', 'title', 'targetAmount', 'currentAmount', 'deadline','createdAt'],
         where: {
             idUser: idUser, // usuario logeado
         }
@@ -33,7 +36,8 @@ async function edit(idUser, idGoal, goalData) {
     if (!goal) {
         throw new Errors.NotFound();
     }
-    await Goal.update(
+
+    if (await Goal.update(
         {
             title: goalData.title,
             targetAmount: goalData.targetAmount,
@@ -46,18 +50,13 @@ async function edit(idUser, idGoal, goalData) {
                 idUser
             }
         }
-    )
-
-    const updatedGoal = await Goal.findByPk(goal.idGoal);
-    return {
-        idUser: updatedGoal.idUser,
-        idGoal: updatedGoal.idGoal,
-        title: updatedGoal.title,
-        targetAmount: updatedGoal.targetAmount,
-        currentAmount: updatedGoal.currentAmount,
-        deadline: updatedGoal.deadline
-    };
+    ) > 0) {
+        return await Goal.findByPk(goal.idGoal);
+    } else {
+        throw new Errors.UnhandledError();
+    }
 }
+
 
 async function remove(idUser, idGoal) {
 
@@ -87,14 +86,17 @@ async function income(idUser, idGoal, amount) {
         throw new Errors.AlreadyExpired();
     }
 
-    const response = await Goal.update(
+    if ( await Goal.update(
         { currentAmount: parseFloat(goal.currentAmount) + parseFloat(amount) },
         { where: { 
             idGoal: idGoal,
             idUser
          } }
-    );
-    return response > 0;
+    ) > 0) {
+        return await Goal.findByPk(goal.idGoal);
+    } else {
+        throw new Errors.UnhandledError();
+    }
 }
 
 async function report(idUser) {
@@ -102,7 +104,7 @@ async function report(idUser) {
 
     //past goals achieved 
     let goals = await Goal.findAll({
-        attributes: ['title', 'targetAmount', 'currentAmount', 'deadline'],
+        attributes: ['idGoal', 'title', 'targetAmount', 'currentAmount', 'deadline', 'createdAt'],
         where: {
             idUser: idUser,
             deadline: {
@@ -117,7 +119,7 @@ async function report(idUser) {
 
     //past goals not achieved 
     goals = await Goal.findAll({
-        attributes: ['title', 'targetAmount', 'currentAmount', 'deadline'],
+        attributes: ['idGoal','title', 'targetAmount', 'currentAmount', 'deadline', 'createdAt'],
         where: {
             idUser: idUser,
             deadline: {
@@ -132,7 +134,7 @@ async function report(idUser) {
 
     //future goals achieved 
     goals = await Goal.findAll({
-        attributes: ['title', 'targetAmount', 'currentAmount', 'deadline'],
+        attributes: ['idGoal', 'title', 'targetAmount', 'currentAmount', 'deadline', 'createdAt'],
         where: {
             idUser: idUser,
             deadline: {
@@ -147,7 +149,7 @@ async function report(idUser) {
 
     //future goals pending 
     goals = await Goal.findAll({
-        attributes: ['title', 'targetAmount', 'currentAmount', 'deadline'],
+        attributes: ['idGoal', 'title', 'targetAmount', 'currentAmount', 'deadline', 'createdAt'],
         where: {
             idUser: idUser,
             deadline: {

@@ -69,20 +69,32 @@ function validateBudgetData() {
             .isFloat({ min: 0.01 }).withMessage(errors.MUST_BE_NUMBER),   
         check("month")
             .notEmpty().withMessage(errors.DATA_IS_EMPTY)  
-            .isInt({ min: 1, max: 12 }).withMessage(errors.INVALID_DATE)
     ]; 
 }
 
 function validateGoalData() { 
+    console.log("validateGoalData");
     return [
         check("title")
             .notEmpty().withMessage(errors.DATA_IS_EMPTY),
         check("targetAmount")
-            .notEmpty().withMessage(errors.DATA_IS_EMPTY)  
-            .isFloat({ min: 0.01 }).withMessage(errors.MUST_BE_NUMBER),
+            .notEmpty().withMessage(errors.DATA_IS_EMPTY).custom((value, { req }) => {
+                console.log("[VALIDANDO] targetAmount notEmpty:", value); 
+                return true;
+              })
+            .isFloat({ min: 0}).withMessage(errors.MUST_BE_NUMBER).custom((value, { req }) => {
+                console.log("[VALIDANDO] targetAmount isFloat:", value); 
+                return true;
+              }),
         check("currentAmount")
-            .notEmpty().withMessage(errors.DATA_IS_EMPTY)  
-            .isFloat({ min: 0.01 }).withMessage(errors.MUST_BE_NUMBER),
+            .notEmpty().withMessage(errors.DATA_IS_EMPTY).custom((value, { req }) => {
+                console.log("[VALIDANDO] currentAmount notEmpty:", value); 
+                return true;
+              })
+            .isFloat({ min: 0 }).withMessage(errors.MUST_BE_NUMBER).custom((value, { req }) => {
+                console.log("[VALIDANDO] currentAmount isFloat:", value); 
+                return true;
+              }),
         check("deadline")
             .notEmpty().withMessage(errors.DATA_IS_EMPTY)  
             .isISO8601().withMessage(errors.INVALID_DATE)/*.custom((value, { req }) => {

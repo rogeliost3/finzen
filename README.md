@@ -25,7 +25,7 @@ Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + S
 - description
 - categoryId (FK)
 - date
-- createdAt, updatedAt
+- balance
 
 ## Categories
 - id
@@ -63,12 +63,16 @@ Proyecto personal que cumple con los requisitos técnicos (Node.js + Express + S
 ## Authentication
 ```POST api/register                   registro de un usuario              {name, email, password}```  
 ```POST api/login                      login de un usuario                 {email, password}```  
+```GET  api//user-info                 obtiene la info del usuario logeado ```
 
 ## Users
 ```GET api/user/                       listado de usuarios, solo admin```  
-```PUT api/user/:id/edit               edicion de usuarios, solo admin     :id {name, email, password}```  
-```DELETE api/user/:id/remove          borrado de usuarios, solo admin     :id ```  
-```GET api/user/:id                    ver usuario por su id, solo admin   :id```  
+```PUT api/user/:id/edit               edicion, usuario el suyo propio solo```
+```                                    admin puede editar a todos          :id {name, email, password}```  
+```DELETE api/user/:id/remove          borrado, usuario el suyo propio solo```
+```                                    admin puede borrar a todos          :id ```  
+```GET api/user/:id                    ver, usuario el suyo propio solo```
+```                                    admin ve a todos                    :id```  
 
 ## Categories
 ```GET api/categories/                 listado de categorias del usuario```  
@@ -113,4 +117,7 @@ Generar el contenedor docker:
     - Llamar a la aplicacion con
         localhost:3000
 
-
+MODIFICACIONES POSTERIORES :
+Todos los endpoints devuelveN todos los campos de cada tabla, con sus idUser.
+Se creó el end-point getUserInfo que devuelve la info del usuario logeado en ese momento
+En la validacion de fecha para month, se ha quitado porque daba error si el mes se pasaba en formato "YYYY-MM"

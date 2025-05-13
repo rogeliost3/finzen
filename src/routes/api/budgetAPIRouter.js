@@ -7,6 +7,7 @@ import Errors from "../../utils/errors.js";
 const router = Router();
 
 router.get("/", isLoggedInAPI, budgetAPIController.getAll);
+
 router.post("/create", isLoggedInAPI, ...validateBudgetData(), Errors.throwErrors, budgetAPIController.create);
 router.get("/report/:id/",isLoggedInAPI, ...validateId(), Errors.throwErrors, budgetAPIController.getAnualReport); 
 router.put("/:id/edit", isLoggedInAPI, ...validateId(), ...validateBudgetData(), Errors.throwErrors, budgetAPIController.edit);

@@ -1,5 +1,7 @@
 # Personal
 ignore/
+# trakear este archivo y asi no se borrara la carpeta al hacer checkouts
+!ignore/.gitkeep
 
 # Logs
 logs

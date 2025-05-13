@@ -3,7 +3,7 @@ import { Op } from "sequelize";
 
 async function getAll(idUser) {
     const transactions = await Transaction.findAll({
-      attributes: ['date', 'type', 'amount', 'description' ],
+      attributes: ['idTransaction','date', 'type', 'amount', 'description','balance' ],
       where: {
         idUser: idUser, // usuario logeado
       }
@@ -14,7 +14,7 @@ async function getAll(idUser) {
 async function getByCategoryAndDate(idUser,idCategory,dateInit,dateEnd) {
   
   const transactions = await Transaction.findAll({
-      attributes: ['date', 'type', 'amount', 'description' ],
+      attributes: ['idTransaction','date', 'type', 'amount', 'description','balance' ],
       where: {
         idUser: idUser, // usuario logeado
         idCategory: idCategory, // categoría a filtrar

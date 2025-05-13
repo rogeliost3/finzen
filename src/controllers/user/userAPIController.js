@@ -1,61 +1,43 @@
 import userController from "../../controllers/user/userController.js";
+import Errors from "../../utils/errors.js";
 
+//Solo los administradores pueden ver todos los usuarios
 async function getAll(req, res) {
-    console.log("userAPIController:getAll");
-
-    // try {
+    if (req.user.isAdmin) {
         const users = await userController.getAll();
         res.json(users);
-    // } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ error: "Server error" });
-    // }
+    } else
+        throw new Errors.Unauthorized();
 }
 
+// El usuario logeado solo puede solicitar sus datos
+// El administrador puede solicitar cualquier usuario
 async function getByID(req, res) {
-    console.log("userAPIController:getByID");
-
-    // try {
-        const id = req.params.id;
-        const user = await userController.getByID(id);
+    if (req.user.isAdmin || req.user.idUser == req.params.id) {
+        const user = await userController.getByID(req.params.id);
         res.json(user);
-    // } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ error: "Server error" });
-    // }
+    } else
+        throw new Errors.Unauthorized();
 }
 
-
+// El usuario logeado solo puede editar sus datos
+// El administrador puede editar cualquier usuario
 async function edit(req, res) {
-    console.log("userAPIController:edit");
-    // try {
-        const id = req.params.id;
-        const result = await userController.edit(id, req.body);
+    if (req.user.isAdmin || req.user.idUser == req.params.id) {
+        const result = await userController.edit(req.params.id, req.body);
         res.json(result);
-    // } catch (error) {
-    //     console.error(error);
-    //     if (error.statusCode) {
-    //         res.status(error.statusCode).json({ error: error.message });
-    //     } else {
-    //         res.status(500).json({ error: "Server error" });
-    //     }
-    // }
+    } else
+        throw new Errors.Unauthorized();
 }
 
+// El usuario logeado solo puede borrar su cuenta
+// El administrador puede borrar cualquier cuenta menos la suya
 async function remove(req, res) {
-    console.log("userAPIController:remove");
-    // try{
-        const id = req.params.id;
-        const response = await userController.remove(id);
+    if ( (req.user.isAdmin && (req.params.id != req.user.idUser)) || req.user.idUser == req.params.id) {
+        const response = await userController.remove(req.params.id);
         res.json(response);
-    // } catch (error) {
-    //     console.error(error);
-    //     if (error.statusCode) {
-    //         res.status(error.statusCode).json({ error: error.message });
-    //     } else {
-    //         res.status(500).json({ error: "Server error" });
-    //     }
-    // }
+    } else
+        throw new Errors.Unauthorized();
 }
 
 export {

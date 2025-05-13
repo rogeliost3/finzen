@@ -10,8 +10,8 @@ const Goal = connection.define('Goal', {
   
 }, 
   {
-    tableName: 'Goals',       // 👈 nombre exacto de la tabla en la DB
-    freezeTableName: true,      // 👈 evita que Sequelize pluralice "Goal"
+    tableName: 'Goals',       // nombre exacto de la tabla en la DB
+    freezeTableName: true,      // evita que Sequelize pluralice "Goal"
     timestamps: true,
     updatedAt: false
   }

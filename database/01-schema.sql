@@ -48,6 +48,7 @@ DROP TABLE IF EXISTS `finzen`.`Categories` ;
 CREATE TABLE IF NOT EXISTS `finzen`.`Categories` (
   `idCategory` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
+  `icon` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`idCategory`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 61
@@ -112,33 +113,24 @@ COLLATE = utf8mb4_unicode_ci;
 -- -----------------------------------------------------
 -- Table `finzen`.`Transactions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `finzen`.`Transactions` ;
-
-CREATE TABLE IF NOT EXISTS `finzen`.`Transactions` (
-  `idTransaction` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `idUser` INT UNSIGNED NOT NULL,
-  `type` ENUM('income', 'expense') NOT NULL,
-  `amount` DECIMAL(10,2) NOT NULL,
-  `description` VARCHAR(255) NULL DEFAULT NULL,
-  `idCategory` INT UNSIGNED NULL DEFAULT NULL,
-  `date` DATE NOT NULL,
-  `createdAt` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+DROP TABLE IF EXISTS `Transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Transactions` (
+  `idTransaction` int unsigned NOT NULL AUTO_INCREMENT,
+  `idUser` int unsigned NOT NULL,
+  `type` enum('income','expense') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `idCategory` int unsigned DEFAULT NULL,
+  `date` date NOT NULL,
+  `balance` decimal(10,2) NOT NULL,
   PRIMARY KEY (`idTransaction`),
-  INDEX `idUser` (`idUser` ASC),
-  INDEX `idCategory` (`idCategory` ASC),
-  CONSTRAINT `Transactions_ibfk_1`
-    FOREIGN KEY (`idUser`)
-    REFERENCES `finzen`.`Users` (`idUser`)
-    ON DELETE CASCADE,
-  CONSTRAINT `Transactions_ibfk_2`
-    FOREIGN KEY (`idCategory`)
-    REFERENCES `finzen`.`Categories` (`idCategory`)
-    ON DELETE SET NULL)
-ENGINE = InnoDB
-AUTO_INCREMENT = 391
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_ci;
+  KEY `idUser` (`idUser`),
+  KEY `idCategory` (`idCategory`),
+  CONSTRAINT `Transactions_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `Users` (`idUser`) ON DELETE CASCADE,
+  CONSTRAINT `Transactions_ibfk_2` FOREIGN KEY (`idCategory`) REFERENCES `Categories` (`idCategory`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=901 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -5,11 +5,12 @@ import { Op, fn, col } from "sequelize";
 import Transaction from "../../models/Transaction.js";
 
 async function create(idUser, budgetData) {
-    budgetData.idUser = idUser;
-    if (!await Category.findByPk(budgetData.idCategory)) {
+    const {idBudget, createdAt, ...safeData} = budgetData;
+    safeData.idUser = idUser;
+    if (!await Category.findByPk(safeData.idCategory)) {
         throw new Errors.NotFound();
     }
-    return await Budget.create(budgetData);
+    return await Budget.create(safeData);
 }
 
 async function getAll(idUser) {
@@ -84,11 +85,11 @@ async function getAnualReport(idUser, year) {
                 [Op.between]: [`${year}-01`, `${year}-12`] // Formato 'YYYY-MM'
             }
         },
-        attributes: ['idBudget', 'idCategory', 'limitAmount', 'month'],
+        attributes: ['idUser','idBudget', 'idCategory', 'limitAmount', 'month'],
         include: [
             {
                 model: Category,
-                attributes: ['name']
+                attributes: ['name',"icon"]
             }
         ]
     });
@@ -129,24 +130,29 @@ async function getAnualReport(idUser, year) {
 
         totalBudget += parseFloat(limitAmount);
         totalSpent += parseFloat(spent);
-
+        console.log("icon: ", category.icon);
         result.push({
+            idBudget,
+            idUser,
             month,
             categoryName: category.name,
             limitAmount,
             totalSpent: spent,
-            balance
+            balance,
+            icon: category.icon
         });
     }
     // Calcular totales anuales
     const numericBudget = Number(totalBudget) || 0;
     const numericSpent = Number(totalSpent) || 0;
     
-    result.push({
-        totalBudget: numericBudget.toFixed(2),
-        totalSpent: numericSpent.toFixed(2),
-        totalBalance: (numericBudget - numericSpent).toFixed(2)
-    });
+    if (result.length>0) {
+        result.push({totals: {
+            totalBudget: numericBudget.toFixed(2),
+            totalSpent: numericSpent.toFixed(2),
+            totalBalance: (numericBudget - numericSpent).toFixed(2)
+        }});
+    }
     return result;
 }
 

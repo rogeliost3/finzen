@@ -4,6 +4,10 @@
 services:
   # Servicio de la aplicación Node.js
   app:
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     container_name: ${APP_HOST} #nombre del contenedor 1 con la aplicacion
     build: . # lugar donde debe instalarse el contenedor, con . le decimos que lea el dockerfile de la carpeta actual
     # puede tener mas de un dockerfile para diferentes servicios
@@ -23,6 +27,10 @@ services:
   #   .env
 
   mysql:
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     container_name: ${DB_HOST} # nombre del contenedor 2 con la base de datos, que mapearemos fuera del contenedor para persistencia cuando se borre el contenedor
     image: mysql:8.0
     restart: unless-stopped

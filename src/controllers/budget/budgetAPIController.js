@@ -1,6 +1,7 @@
 import budgetController from "./budgetController.js";
 
 async function create(req, res) {
+    console.log("creando budget");
     const result = await budgetController.create(req.user.idUser,req.body);
     res.json(result);
 }

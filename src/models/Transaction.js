@@ -6,11 +6,12 @@ const Transaction = connection.define('Transaction', {
   type: { type: DataTypes.ENUM('income', 'expense'), allowNull: false },
   amount: { type: DataTypes.FLOAT, allowNull: false },
   description: { type: DataTypes.STRING },
-  date: { type: DataTypes.DATEONLY, allowNull: false }
+  date: { type: DataTypes.DATEONLY, allowNull: false },
+  balance: { type: DataTypes.FLOAT, allowNull: false }
 }, {
   tableName: 'Transactions',       // nombre exacto de la tabla en la DB
   freezeTableName: true,      // evita que Sequelize pluralice "Transaction"
-  timestamps: true,
+  // timestamps: true,
 });
 
 export default Transaction;
